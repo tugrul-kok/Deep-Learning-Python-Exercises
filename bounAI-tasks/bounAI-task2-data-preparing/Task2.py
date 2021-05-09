@@ -43,10 +43,12 @@ for i in categoricals:
     final = np.hstack((final, onehot_encoder.fit_transform(integer_encoded)))
 
 columns = np.array(['city_development_index', 'training_hours', 'experience', 'last_new_job'])
-uniques = np.array(sorted(data['gender'].unique()))
 
-print(columns)
+for i in categoricals:
+    uniques = np.array(sorted(data[i].unique()))
+    columns = np.concatenate((columns, uniques))
 
-print('after')
+
+
 
 
