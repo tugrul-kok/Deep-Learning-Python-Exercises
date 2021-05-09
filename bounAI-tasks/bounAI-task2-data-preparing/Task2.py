@@ -48,7 +48,26 @@ for i in categoricals:
     uniques = np.array(sorted(data[i].unique()))
     columns = np.concatenate((columns, uniques))
 
+#reverting starts here
+revert = np.empty((8955, 147), dtype="<U32")
+
+for i in range(0, len(final)):
+    for j in range(4, 151):
+        revert[i, j-4] = int(final[i, j]) * str(columns[j])
 
 
+revert = revert.ravel()
+revert = np.delete(revert, np.argwhere(revert == ''))
+revert = np.reshape(revert, (8955,8))
 
 
+for i in range(1 ,4):
+    final[:,i]*=stats[i-1,1]
+    final[:,i]+=stats[i-1,0]
+
+
+back = pd.DataFrame(final[:,0:4], columns=columns[0:4])
+back2 = pd.DataFrame(revert, columns=categoricals)
+origin = pd.concat([back, back2],axis=1)
+
+print(origin)
