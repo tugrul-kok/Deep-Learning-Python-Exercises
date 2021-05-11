@@ -2,13 +2,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+# This function calculates vector magnitude 
 def pisagor(num1, num2):
     return np.sqrt(num2*num2 + num1*num1)
 
 
 def plotter(plotindex):
-
+    # It is about how data stored at csv. Those are corresponding columns.
     related_columns = [plotindex, plotindex + 10, plotindex + 20, plotindex + 1, plotindex + 11, plotindex + 21]
     fig = plt.figure(figsize=(20, 10))
     if plotindex == 1:
@@ -22,7 +22,7 @@ def plotter(plotindex):
     elif plotindex == 9:
         fig.suptitle("Kinematic Analysis For Point D0", fontsize='xx-large')
 
-    pltcount = 1
+    pltcount = 1 # This is for subploting.
 
     for i in related_columns:
         plt.subplot(3, 3, pltcount)
@@ -31,9 +31,10 @@ def plotter(plotindex):
         plt.ylabel(df.columns[i])
         plt.grid()
         pltcount += 1
-
+    
+    # This loop plots the magnitudes. 
     for j in [plotindex, plotindex + 10, plotindex + 20]:
-        dist = []
+        dist = [] # This holds vector magnitudes 
         for i in range(28, 148):
             dist.append(pisagor(df[df.columns[j]][i], df[df.columns[j + 1]][i]))
         plt.subplot(3, 3, pltcount)
@@ -69,6 +70,6 @@ df = pd.read_csv('data.csv')
 df = df.drop(df.index[range(148, df.shape[0])])
 df = df.drop(df.index[range(0, 28)])
 
-plotindex = [1, 3, 5, 7, 9] # 1 = A, 2 = B, 3 = C, 4 = D, 5 = D0
+plotindex = [1, 3, 5, 7, 9] # 1 = A, 3 = B, 5 = C, 7 = D, 9 = D0
 for i in plotindex:
     plotter(i)
